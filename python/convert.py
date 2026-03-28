@@ -1,7 +1,7 @@
 import sys
 from rknn.api import RKNN
 
-DATASET_PATH = '../../../datasets/COCO/coco_subset_20.txt'
+DATASET_PATH = '../../../datasets/M3FD/M3FD_subset.txt'
 DEFAULT_RKNN_PATH = '../model/yolo11.rknn'
 DEFAULT_QUANT = True
 
@@ -38,11 +38,14 @@ if __name__ == '__main__':
     model_path, platform, do_quant, output_path = parse_arg()
 
     # Create RKNN object
-    rknn = RKNN(verbose=False)
+    rknn = RKNN(verbose=True)
 
     # Pre-process config
     print('--> Config model')
-    rknn.config(mean_values=[[0, 0, 0]], std_values=[[255, 255, 255]], target_platform=platform)
+    rknn.config(mean_values=[[0, 0, 0, 0, 0, 0]], 
+                std_values=[[255, 255, 255, 255, 255, 255]],
+                 target_platform=platform,
+                 optimization_level=3)
     print('done')
 
     # Load model
